@@ -1,6 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Form that the server sends
 app.get('/', (req, res) => {
@@ -16,26 +19,8 @@ app.get('/', (req, res) => {
     `);
 });
 
-//Middleware to parse formData and add it to req.body
-bodyParser = (req, res, next) => {
-	if (req.method === 'POST') {
-		req.on('data', (data) => {
-			const parsed = data.toString('utf8').split('&');
-			const formData = {};
-			for (let pair of parsed) {
-				const [ key, value ] = pair.split('=');
-				formData[key] = value;
-			}
-			req.body = formData;
-			next();
-		});
-	} else {
-		next();
-	}
-};
-
 //response to user after signing up
-app.post('/', bodyParser, (req, res) => {
+app.post('/', (req, res) => {
 	console.log(req.body);
 	res.send('account created');
 });
