@@ -29,6 +29,7 @@ class UsersRepository {
 		const records = await this.getAll();
 		records.push(attributes);
 		await this.writeAll(records);
+		return attributes;
 	}
 
 	// write all records to users.json
