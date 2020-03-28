@@ -23,6 +23,8 @@ app.use(cartsRouter);
 //Form that the server sends
 
 //Server listening on port 3000
-app.listen(3000, () => {
-	console.log('listening -_-');
-});
+let port = process.env.PORT;
+if (port == null || port == '') {
+	port = 8000;
+}
+app.listen(port);
